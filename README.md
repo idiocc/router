@@ -30,7 +30,7 @@ import initRoutes from '@idio/router'
 
 ## `async initRoutes(`<br/>&nbsp;&nbsp;`router: Router,`<br/>&nbsp;&nbsp;`dir: string,`<br/>&nbsp;&nbsp;`config: RouterConfig,`<br/>`): void`
 
-The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. Each module should export the default function which will be initialised as the middleware. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object).
+The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. Each module should export the default function which will be initialised as the middleware. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object). Any middleware chain constructor exported in the module will take precedence over the method middleware chain constructor from the config.
 
 `import('koa').Middleware` __<a name="type-middleware">`Middleware`</a>__
 
@@ -43,7 +43,7 @@ __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
 | filter           | _(string) =&gt; boolean_                                                 | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
 | aliases          | _Object.&lt;string, string[]&gt;_                                        | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
 
-For example, we can specify 1 GET and 1 POST routes in the `example/routes` directory:
+For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` directory:
 
 ```m
 example/routes
@@ -56,9 +56,16 @@ example/routes
 *example/routes/get/index.js*
 ```js
 export default async (ctx) => {
-  ctx.body = 'example get response'
+  const { test } = ctx
+  ctx.body = `example get response: ${test}`
 }
+
 export const aliases = ['/']
+
+// The router util will lookup the middleware by its name.
+export const middleware = (route) => {
+  return ['example', route]
+}
 ```
 *example/routes/post/example.js*
 ```js
@@ -78,6 +85,14 @@ import initRoutes from '@idio/router'
 const Server = async () => {
   const { app, url, router, middleware } = await core({
     bodyparser: {},
+    example: {
+      middlewareConstructor() {
+        return async (ctx, next) => {
+          ctx.test = 'test'
+          await next()
+        }
+      },
+    },
   }, { port: 5000 })
   await initRoutes(router, 'example/routes', {
     middlewareConfig: {
@@ -99,7 +114,7 @@ const Server = async () => {
 ```
 http://localhost:5000
 GET /
- :: example get response
+ :: example get response: test
 POST "hello world" > / 
  :: example post response: hello world
 ```

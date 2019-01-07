@@ -7,6 +7,14 @@ import initRoutes from '../src'
 const Server = async () => {
   const { app, url, router, middleware } = await core({
     bodyparser: {},
+    example: {
+      middlewareConstructor() {
+        return async (ctx, next) => {
+          ctx.test = 'test'
+          await next()
+        }
+      },
+    },
   }, { port: 5000 })
   await initRoutes(router, 'example/routes', {
     middlewareConfig: {
