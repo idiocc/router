@@ -13,7 +13,8 @@ const { join, resolve } = require('path');
   const path = resolve(dir, file)
   const mod = require(path)
   const fn = mod.__esModule ? mod.default : mod
-  return { route, fn, path, aliases: mod.aliases }
+  const { aliases, middleware } = mod
+  return { route, fn, path, aliases, middleware }
 }
 
 const filterJsx = route => /\.jsx?$/.test(route)
@@ -42,12 +43,12 @@ const reducePaths = (acc, { route, fn, path, aliases }) => {
        const addRoutes = (routes, method, router, getMiddleware, aliases = {}) => {
   const res = Object.keys(routes).reduce((acc, route) => {
     const fn = routes[route]
-    const middleware = typeof getMiddleware == 'function' ? getMiddleware(fn) : [fn]
+    const { aliases: ma = [], middleware: gm } = fn
+    const middleware = getMiddleware(fn, { getMiddleware: gm, method, route })
     const name = getName(method, route)
     router[method](name, route, ...middleware)
 
     const a = aliases[route] || []
-    const { aliases: ma = [] } = fn
     const aa = [...a, ...ma]
     aa.forEach((alias) => {
       const aliasName = getName(method, alias)
