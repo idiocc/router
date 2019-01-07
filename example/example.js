@@ -24,7 +24,7 @@ const Server = async () => {
     },
     aliases: {
       post: {
-        '/example': ['/'],
+        '/example': ['/example.html'],
       },
     },
     middleware,
