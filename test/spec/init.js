@@ -52,6 +52,10 @@ const TS = {
     equal(getAlias, 'test dynamic route')
     equal(getMiddlewareCalls, 2)
 
+    const getModuleAlias = await rqt(`${url}/getTest`)
+    equal(getModuleAlias, 'test dynamic route')
+    equal(getMiddlewareCalls, 3)
+
     const message = 'hello world'
 
     const post = await rqt(`${url}/test`, {

@@ -13,14 +13,15 @@ export const importRoute = (dir, file) => {
   const path = resolve(dir, file)
   const mod = require(path)
   const fn = mod.__esModule ? mod.default : mod
-  fn._route = true
-  return { route, fn, path }
+  return { route, fn, path, aliases: mod.aliases }
 }
 
 const filterJsx = route => /\.jsx?$/.test(route)
 
-const reducePaths = (acc, { route, fn, path }) => {
+const reducePaths = (acc, { route, fn, path, aliases }) => {
+  fn._route = true
   fn.path = path
+  if (aliases) fn.aliases = aliases
   return {
     ...acc,
     [route]: fn,
@@ -46,11 +47,13 @@ export const addRoutes = (routes, method, router, getMiddleware, aliases = {}) =
     router[method](name, route, ...middleware)
 
     const a = aliases[route] || []
-    a.forEach((alias) => {
+    const { aliases: ma = [] } = fn
+    const aa = [...a, ...ma]
+    aa.forEach((alias) => {
       const aliasName = getName(method, alias)
       router[method](aliasName, alias, ...middleware)
     })
-    return { ...acc, [route]: a }
+    return { ...acc, [route]: aa }
   }, {})
   return res
 }
