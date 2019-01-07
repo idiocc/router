@@ -12,6 +12,15 @@ export default class Context {
   async _init() {
     LOG('init context')
   }
+  get routesDir() {
+    return 'test/fixture/routes'
+  }
+  get routesDirModules() {
+    return 'test/fixture/routes-modules'
+  }
+  get routesDirWithFiles() {
+    return 'test/fixture/routes-with-files'
+  }
   /**
    * Example method.
    */

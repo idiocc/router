@@ -37,10 +37,15 @@
   },
   "homepage": "https://github.com/idiocc/router#readme",
   "devDependencies": {
+    "@idio/core": "1.0.2",
     "alamode": "1.6.0",
     "documentary": "1.20.1",
     "eslint-config-artdeco": "1.0.1",
+    "rqt": "3.0.1",
     "yarn-s": "1.1.0",
     "zoroaster": "3.6.6"
+  },
+  "dependencies": {
+    "@wrote/read-dir-structure": "1.0.1"
   }
 }

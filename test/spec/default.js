@@ -19,4 +19,4 @@ const T = {
   },
 }
 
-export default T
+// export default T
