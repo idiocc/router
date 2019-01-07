@@ -2,7 +2,7 @@ import { equal } from 'zoroaster'
 import rqt from 'rqt'
 import IdioContext from '../context/idio'
 import Context from '../context'
-import { initRoutes } from '../../src'
+import initRoutes from '../../src'
 
 /** @type {Object.<string, (i: IdioContext, c:Context)>} */
 const TS = {

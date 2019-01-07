@@ -1,7 +1,7 @@
 {
   "name": "@idio/router",
   "version": "0.0.0",
-  "description": "The Router For The Idio Web Server With Automatic Initialisation And Live Reload.",
+  "description": "The Router Utility For The Idio Web Server With Automatic Initialisation And Live Reload.",
   "main": "build",
   "scripts": {
     "t": "zoroaster -a",
@@ -11,7 +11,7 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc documentary -o README.md",
-    "b": "alamode src -o build",
+    "b": "alamode src -o build -s",
     "d": "yarn-s d1",
     "d1": "NODE_DEBUG=doc doc src/index.js -g",
     "build": "yarn-s d b doc",
@@ -28,7 +28,9 @@
   },
   "keywords": [
     "router",
-    "idio"
+    "idio",
+    "web",
+    "server"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
