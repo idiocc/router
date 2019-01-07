@@ -5,12 +5,12 @@ import { readRoutes, addRoutes } from './lib'
  * @param {Router} router Instance of the `koa-router`.
  * @param {string} [dir="src/routes"] Path to the directory with routes. Default `src/routes`.
  * @param {RoutesConfig} routesConfig Options for the router.
- * @param {{Object.<string, (route: Middleware) => (string|Middleware)[]>}} routesConfig.middlewareConfig The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `appMiddleware` object.
+ * @param {Object.<string, (route: Middleware) => (string|Middleware)[]>} routesConfig.middlewareConfig The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
  * @param {*} routesConfig.middleware The configured middleware object return by the Idio's `start` method.
  * @param {(string) => boolean} routesConfig.filter The filter for filenames. Defaults to importing JS and JSX.
- * @param {Object.<string, string[]>} routesConfig.aliases The map of aliases.
+ * @param {Object.<string, string[]>} routesConfig.aliases The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
  */
-export const initRoutes = async (router, dir = 'src/routes', {
+const initRoutes = async (router, dir = 'src/routes', {
   middlewareConfig = {},
   middleware = {},
   filter,
@@ -54,6 +54,8 @@ const makeGetMiddleware = (method, middleware, appMiddleware) => {
   return getMiddleware
 }
 
+export default initRoutes
+
 /**
  * @typedef {import('koa-router')} Router
  */
@@ -63,8 +65,8 @@ const makeGetMiddleware = (method, middleware, appMiddleware) => {
  * @typedef {import('koa').Middleware} Middleware
  *
  * @typedef {Object} RoutesConfig Options for the router.
- * @prop {{Object.<string, (route: Middleware) => (string|Middleware)[]>}} middlewareConfig The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `appMiddleware` object.
+ * @prop {Object.<string, (route: Middleware) => (string|Middleware)[]>} middlewareConfig The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
  * @prop {*} middleware The configured middleware object return by the Idio's `start` method.
  * @prop {(string) => boolean} filter The filter for filenames. Defaults to importing JS and JSX.
- * @prop {Object.<string, string[]>} aliases The map of aliases.
+ * @prop {Object.<string, string[]>} aliases The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
  */

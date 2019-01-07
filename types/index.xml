@@ -1,8 +1,8 @@
 <types>
   <import name="Middleware" from="koa"/>
   <type name="RoutesConfig" desc="Options for the router.">
-    <prop type="{Object.<string, (route: Middleware) => (string|Middleware)[]>}" name="middlewareConfig">
-      The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `appMiddleware` object.
+    <prop type="Object.<string, (route: Middleware) => (string|Middleware)[]>" name="middlewareConfig">
+      The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
     </prop>
     <prop name="middleware">
       The configured middleware object return by the Idio's `start` method.
@@ -11,7 +11,7 @@
       The filter for filenames. Defaults to importing JS and JSX.
     </prop>
     <prop name="aliases" type="Object.<string, string[]>">
-      The map of aliases.
+      The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
     </prop>
   </type>
 </types>
