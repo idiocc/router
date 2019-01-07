@@ -11,6 +11,29 @@ const TS = {
     const { router } = await start()
     await initRoutes(router, routesDirWithFiles)
   },
+  async 'sets up exported middleware'({ start }) {
+    const tt = 'test'
+    const { app, url, router, middleware } = await start({
+      bodyparser: {},
+      test: {
+        middlewareConstructor() {
+          return async (ctx, next) => {
+            ctx.test = tt
+            await next()
+          }
+        },
+      },
+    })
+    await initRoutes(router, 'test/fixture/routes-mw', {
+      middleware,
+    })
+    app.use(router.routes())
+    const message = 'message'
+    const post = await rqt(`${url}/test-mw`, {
+      data: { message },
+    })
+    equal(post, `${tt} default post request: ${message}`)
+  },
   async 'uses routes'({ start }, { routesDir }) {
     let getMiddlewareCalls = 0
     const { app, url, router, middleware } = await start({
