@@ -20,7 +20,7 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
 
 %TYPEDEF types/index.xml%
 
-For example, we can specify 1 get and 1 post routes in the `example/routes` directory:
+For example, we can specify 1 GET and 1 POST routes in the `example/routes` directory:
 
 %TREE example/routes%
 
@@ -28,6 +28,8 @@ For example, we can specify 1 get and 1 post routes in the `example/routes` dire
 %EXAMPLE: example/routes/get/index.js%
 *example/routes/post/example.js*
 %EXAMPLE: example/routes/post/example.js%
+
+Then the router can be automatically configured.
 
 %EXAMPLE: example/example.js, ../src => @idio/router%
 %FORK example example/example%

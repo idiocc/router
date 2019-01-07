@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/%40idio%2Frouter.svg)](https://npmjs.org/package/@idio/router)
 
-`@idio/router` Is The Router Initialiser For The Idio Web Server With Live Reload.
+`@idio/router` Is The Router Utility For The Idio Web Server With Automatic Initialisation And Live Reload.
 
 ```sh
 yarn add -E @idio/router
@@ -36,14 +36,14 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
 
 __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
 
-|         Name          |                                   Type                                   |                                                                                                   Description                                                                                                    |
-| --------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| __middlewareConfig*__ | _Object.&lt;string, (route: Middleware) =&gt;\| (string\|Middleware)[]>_ | The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object. |
-| __middleware*__       | _*_                                                                      | The configured middleware object return by the Idio's `start` method.                                                                                                                                            |
-| __filter*__           | _(string) =&gt; boolean_                                                 | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
-| __aliases*__          | _Object.&lt;string, string[]&gt;_                                        | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
+|       Name       |                                   Type                                   |                                                                                                   Description                                                                                                    |
+| ---------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| middlewareConfig | _Object.&lt;string, (route: Middleware) =&gt;\| (string\|Middleware)[]>_ | The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object. |
+| middleware       | _Object.&lt;string, [Middleware](#type-middleware)&gt;_                  | The configured middleware object return by the Idio's `start` method.                                                                                                                                            |
+| filter           | _(string) =&gt; boolean_                                                 | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
+| aliases          | _Object.&lt;string, string[]&gt;_                                        | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
 
-For example, we can specify 1 get and 1 post routes in the `example/routes` directory:
+For example, we can specify 1 GET and 1 POST routes in the `example/routes` directory:
 
 ```m
 example/routes
@@ -68,6 +68,8 @@ export default async (ctx) => {
 }
 export const aliases = ['/']
 ```
+
+Then the router can be automatically configured.
 
 ```js
 import core from '@idio/core'
