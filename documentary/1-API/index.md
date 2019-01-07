@@ -3,21 +3,31 @@
 The package is available by importing its default function:
 
 ```js
-import router from '@idio/router'
+import initRoutes from '@idio/router'
 ```
 
 %~%
 
-```## router
+```## async initRoutes
 [
-  ["arg1", "string"],
-  ["arg2?", "boolean"]
+  ["router", "Router"],
+  ["dir", "string"],
+  ["config", "RouterConfig"]
 ]
 ```
 
-Call this function to get the result you want.
+The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. Each module should export the default function which will be initialised as the middleware. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object).
 
 %TYPEDEF types/index.xml%
+
+For example, we can specify 1 get and 1 post routes in the `example/routes` directory:
+
+%TREE example/routes%
+
+*example/routes/get/index.js*
+%EXAMPLE: example/routes/get/index.js%
+*example/routes/post/example.js*
+%EXAMPLE: example/routes/post/example.js%
 
 %EXAMPLE: example/example.js, ../src => @idio/router%
 %FORK example example/example%

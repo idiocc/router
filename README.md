@@ -1,8 +1,8 @@
 # @idio/router
 
-[![npm version](https://badge.fury.io/js/@idio/router.svg)](https://npmjs.org/package/@idio/router)
+[![npm version](https://badge.fury.io/js/%40idio%2Frouter.svg)](https://npmjs.org/package/@idio/router)
 
-`@idio/router` is The Router For The Idio Web Server With Automatic Initialisation And Live Reload.
+`@idio/router` Is The Router Initialiser For The Idio Web Server With Live Reload.
 
 ```sh
 yarn add -E @idio/router
@@ -12,8 +12,8 @@ yarn add -E @idio/router
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`router(arg1: string, arg2?: boolean)`](#mynewpackagearg1-stringarg2-boolean-void)
-  * [`Config`](#type-config)
+- [`async initRoutes(router: Router, dir: string, config: RouterConfig)`](#async-initroutesrouter-routerdir-stringconfig-routerconfig-void)
+  * [`RoutesConfig`](#type-routesconfig)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -23,42 +23,90 @@ yarn add -E @idio/router
 The package is available by importing its default function:
 
 ```js
-import router from '@idio/router'
+import initRoutes from '@idio/router'
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
-## `router(`<br/>&nbsp;&nbsp;`arg1: string,`<br/>&nbsp;&nbsp;`arg2?: boolean,`<br/>`): void`
+## `async initRoutes(`<br/>&nbsp;&nbsp;`router: Router,`<br/>&nbsp;&nbsp;`dir: string,`<br/>&nbsp;&nbsp;`config: RouterConfig,`<br/>`): void`
 
-Call this function to get the result you want.
+The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. Each module should export the default function which will be initialised as the middleware. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object).
 
-__<a name="type-config">`Config`</a>__: Options for the program.
+`import('koa').Middleware` __<a name="type-middleware">`Middleware`</a>__
 
-|   Name    |   Type    |    Description    | Default |
-| --------- | --------- | ----------------- | ------- |
-| shouldRun | _boolean_ | A boolean option. | `true`  |
-| __text*__ | _string_  | A text to return. | -       |
+__<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
+
+|         Name          |                                   Type                                   |                                                                                                   Description                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| __middlewareConfig*__ | _Object.&lt;string, (route: Middleware) =&gt;\| (string\|Middleware)[]>_ | The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object. |
+| __middleware*__       | _*_                                                                      | The configured middleware object return by the Idio's `start` method.                                                                                                                                            |
+| __filter*__           | _(string) =&gt; boolean_                                                 | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
+| __aliases*__          | _Object.&lt;string, string[]&gt;_                                        | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
+
+For example, we can specify 1 get and 1 post routes in the `example/routes` directory:
+
+```m
+example/routes
+├── get
+│   └── index.js
+└── post
+    └── example.js
+```
+
+*example/routes/get/index.js*
+```js
+export default async (ctx) => {
+  ctx.body = 'example get response'
+}
+export const aliases = ['/']
+```
+*example/routes/post/example.js*
+```js
+export default async (ctx) => {
+  const { message } = ctx.request.body
+  ctx.body = `example post response: ${message}`
+}
+export const aliases = ['/']
+```
 
 ```js
-/* yarn example/ */
-import router from '@idio/router'
+import core from '@idio/core'
+import initRoutes from '@idio/router'
 
-(async () => {
-  const res = await router({
-    text: 'example',
+const Server = async () => {
+  const { app, url, router, middleware } = await core({
+    bodyparser: {},
+  }, { port: 5000 })
+  await initRoutes(router, 'example/routes', {
+    middlewareConfig: {
+      post(route) {
+        return ['bodyparser', route]
+      },
+    },
+    aliases: {
+      post: {
+        '/example': ['/'],
+      },
+    },
+    middleware,
   })
-  console.log(res)
-})()
+  app.use(router.routes())
+  return { app, url }
+}
 ```
 ```
-example
+http://localhost:5000
+GET /
+ :: example get response
+POST "hello world" > / 
+ :: example post response: hello world
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
 ## Copyright
 
-(c) [Idio][1] 2018
+(c) [Idio][1] 2019
 
 [1]: https://idio.cc
 

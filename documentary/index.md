@@ -2,7 +2,7 @@
 
 %NPM: @idio/router%
 
-`@idio/router` is The Router For The Idio Web Server With Automatic Initialisation And Live Reload.
+`@idio/router` Is The Router Initialiser For The Idio Web Server With Live Reload.
 
 ```sh
 yarn add -E @idio/router
