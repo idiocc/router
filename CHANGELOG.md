@@ -1,5 +1,9 @@
 ## 7 January 2018
 
+### 1.1.0
+
+- [feature] Allow to specify middleware chain constructor in modules.
+
 ### 1.0.0
 
 - [package] Publish `v1`.
