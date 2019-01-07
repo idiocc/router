@@ -11,12 +11,18 @@ import initRoutes from '@idio/router'
 ```## async initRoutes
 [
   ["router", "Router"],
-  ["dir", "string"],
-  ["config", "RouterConfig"]
+  ["dir", "string?"],
+  ["config", "RouterConfig?"]
 ]
 ```
 
-The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. Each module should export the default function which will be initialised as the middleware. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object). Any middleware chain constructor exported in the module will take precedence over the method middleware chain constructor from the config.
+The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
+
+* Each route module should export the default function which will be initialised as the middleware.
+
+* The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object &mdash; or when both ways are used, they are combined).
+
+* The exported `middleware` property specifies any middleware chain constructor that will take precedence over the method middleware chain constructor from the config. When strings are passed, the middleware functions will be looked up in the `middleware` object returned by the `idio`'s `start` method and passed in the configuration.
 
 %TYPEDEF types/index.xml%
 
