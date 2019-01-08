@@ -1,4 +1,4 @@
-```## async initRoutes
+```## async initRoutes => WatchConfig
 [
   ["router", "Router"],
   ["dir", "string?"],

@@ -12,9 +12,9 @@ yarn add -E @idio/router
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`async initRoutes(router: Router, dir: string?, config: RouterConfig?)`](#async-initroutesrouter-routerdir-stringconfig-routerconfig-void)
+- [`async initRoutes(router: Router, dir: string?, config: RouterConfig?): WatchConfig`](#async-initroutesrouter-routerdir-stringconfig-routerconfig-watchconfig)
   * [`RoutesConfig`](#type-routesconfig)
-- [`async watchRoutes(config: Config)`](#async-watchroutesconfig-config-void)
+- [`async watchRoutes(config: WatchConfig)`](#async-watchroutesconfig-watchconfig-void)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -29,7 +29,7 @@ import initRoutes, { watchRoutes } from '@idio/router'
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
-## `async initRoutes(`<br/>&nbsp;&nbsp;`router: Router,`<br/>&nbsp;&nbsp;`dir: string?,`<br/>&nbsp;&nbsp;`config: RouterConfig?,`<br/>`): void`
+## `async initRoutes(`<br/>&nbsp;&nbsp;`router: Router,`<br/>&nbsp;&nbsp;`dir: string?,`<br/>&nbsp;&nbsp;`config: RouterConfig?,`<br/>`): WatchConfig`
 
 The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
 
@@ -131,7 +131,7 @@ POST "hello world" > /
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
 
-## `async watchRoutes(`<br/>&nbsp;&nbsp;`config: Config,`<br/>`): void`
+## `async watchRoutes(`<br/>&nbsp;&nbsp;`config: WatchConfig,`<br/>`): void`
 
 After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
 

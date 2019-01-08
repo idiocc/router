@@ -1,6 +1,6 @@
 ```## async watchRoutes
 [
-  ["config", "Config"]
+  ["config", "WatchConfig"]
 ]
 ```
 
