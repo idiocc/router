@@ -33,14 +33,15 @@ const Server = async () => {
   const res = await rqt(url)
   console.log(' :: %s', res)
   console.log('Update routes/get/index.js')
-  const rnd = Math.floor(Math.random() * 10000)
-  await update('example/watch-routes/get/index.js', /\d+/, rnd)
+  const path = 'example/watch-routes/get/index.js'
+  await update(path, 'initial', 'updated')
   await new Promise(r => {
     watcher.on('modified', r)
   })
   console.log('GET /')
   const res2 = await rqt(url)
   console.log(' :: %s', res2)
+  await update(path, 'updated', 'initial')
   await app.destroy()
   watcher.stop()
 })()

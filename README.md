@@ -14,6 +14,7 @@ yarn add -E @idio/router
 - [API](#api)
 - [`async initRoutes(router: Router, dir: string?, config: RouterConfig?)`](#async-initroutesrouter-routerdir-stringconfig-routerconfig-void)
   * [`RoutesConfig`](#type-routesconfig)
+- [`async watchRoutes(config: Config)`](#async-watchroutesconfig-config-void)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -23,7 +24,7 @@ yarn add -E @idio/router
 The package is available by importing its default function:
 
 ```js
-import initRoutes from '@idio/router'
+import initRoutes, { watchRoutes } from '@idio/router'
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
@@ -129,6 +130,38 @@ POST "hello world" > /
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+
+## `async watchRoutes(`<br/>&nbsp;&nbsp;`config: Config,`<br/>`): void`
+
+After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
+
+```js
+import core from '@idio/core'
+import initRoutes, { watchRoutes } from '@idio/router'
+
+const Server = async () => {
+  const { app, url, router } = await core({}, { port: 5001 })
+  const w = await initRoutes(router, 'example/watch-routes')
+  app.use(router.routes())
+  let watcher
+  if (process.env.NODE_ENV != 'production') {
+    watcher = watchRoutes(w)
+  }
+  return { app, url, watcher }
+}
+```
+```
+http://localhost:5001
+GET /
+ :: [initial] example get response
+Update routes/get/index.js
+⌁ example/watch-routes/get/index.js
+> hot reloaded GET /index /
+GET /
+ :: [updated] example get response
+```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## Copyright
 
