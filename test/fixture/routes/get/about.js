@@ -1,3 +1,3 @@
-module.exports = async (ctx) => {
+module.exports = (ctx) => {
   ctx.body = 'About Us'
 }

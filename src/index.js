@@ -1,4 +1,12 @@
 import { readRoutes, addRoutes } from './lib'
+import { relative } from 'path'
+import { findChildrenInCache, onChange } from './lib/watch'
+import makeGetMiddleware from './lib/get-middleware'
+import { EventEmitter } from 'events'
+let fsevents
+try {
+  fsevents = require('fsevents')
+} catch (e) { /* ignore fsevents */ }
 
 /**
  * Initialise routes.
@@ -9,6 +17,7 @@ import { readRoutes, addRoutes } from './lib'
  * @param {Object.<string, Middleware>} [routesConfig.middleware] The configured middleware object return by the Idio's `start` method.
  * @param {(string) => boolean} [routesConfig.filter] The filter for filenames. Defaults to importing JS and JSX.
  * @param {Object.<string, string[]>} [routesConfig.aliases] The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
+ * @returns The information necessary to call watch.
  */
 const initRoutes = async (router, dir = 'src/routes', {
   middlewareConfig = {},
@@ -29,52 +38,40 @@ const initRoutes = async (router, dir = 'src/routes', {
     }
   }, {})
 
-  return methods
-}
-
-const makeGetMiddleware = (method, methodMiddleware, appMiddleware) => {
-  const getMethodChain = methodMiddleware[method]
-  const thunk = makeThunk(appMiddleware, getMethodChain)
-  return thunk
-}
-
-const makeThunk = (appMiddleware, getMethodChain) => {
-  return (route, { getMiddleware, method: m, route: r } = {}) => {
-    let chain
-    if (getMiddleware) {
-      chain = getMiddleware(route)
-    } else if (getMethodChain) {
-      chain = getMethodChain(route)
-    }
-    if (chain) {
-      const c = mapChain(chain, appMiddleware, m, r)
-      return c
-    }
-    return [route]
-  }
-}
-
-const mapChain = (chain, appMiddleware, method, route) => {
-  const m = chain.map((s) => {
-    if (typeof s == 'string') {
-      const mw = appMiddleware[s]
-      if (!mw) throw new Error(`App middleware ${s} missing in ${method}${route}`)
-      return mw
-    }
-    return s
-  })
-  return m
+  return { dir, methods, router, aliases }
 }
 
 export default initRoutes
 
-
-/**
- * A function specific for each method which returns full middleware chain for routes. The returned array consists of strings which are keys in the appMiddleware object.
- * @type {(route: function) => string[]}
- */
-const t = {} // eslint-disable-line
-
+export const watchRoutes = ({
+  dir, methods, router, aliases, middleware, middlewareConfig,
+}) => {
+  if (!fsevents) throw new Error('fsevents is not available')
+  let watchers = []
+  const emitter = new EventEmitter()
+  Object.keys(methods).reduce((acc, m) => {
+    const method = methods[m]
+    const keys = Object.keys(method)
+    keys.reduce((a, key) => {
+      const { path } = method[key]
+      const watcher = fsevents(path)
+      watcher.on('modified', () => {
+        console.log('⌁ %s', relative('', path))
+        onChange(path, dir, router, aliases)
+        emitter.emit('modified', path)
+      })
+      watchers.push(watcher)
+      // const c = findChildrenInCache(path)
+    }, [])
+  }, {})
+  watchers.forEach((w) => w.start())
+  emitter.stop =  () => {
+    watchers.forEach(w => {
+      w.stop()
+    })
+  }
+  return emitter
+}
 
 /**
  * @typedef {import('koa-router')} Router

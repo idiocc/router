@@ -5,7 +5,7 @@
   "main": "build",
   "scripts": {
     "t": "zoroaster -a",
-    "test": "yarn t test/spec test/mask",
+    "test": "yarn t test/spec test/mask -t 10000",
     "spec": "yarn t test/spec",
     "mask": "yarn t test/mask",
     "test-build": "ALAMODE_ENV=test-build yarn test",
@@ -40,14 +40,20 @@
   "homepage": "https://github.com/idiocc/router#readme",
   "devDependencies": {
     "@idio/core": "1.0.2",
-    "alamode": "1.6.0",
+    "@wrote/read": "1.0.0",
+    "@wrote/write": "1.0.0",
+    "alamode": "1.6.1",
     "documentary": "1.20.1",
     "eslint-config-artdeco": "1.0.1",
     "rqt": "3.0.1",
+    "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
     "zoroaster": "3.6.6"
   },
   "dependencies": {
     "@wrote/read-dir-structure": "1.0.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "1.2.4"
   }
 }

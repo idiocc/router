@@ -1,5 +1,7 @@
 import { resolve } from 'path'
 import { debuglog } from 'util'
+import read from '@wrote/read'
+import write from '@wrote/write'
 
 const LOG = debuglog('@idio/router')
 
@@ -20,6 +22,14 @@ export default class Context {
   }
   get routesDirWithFiles() {
     return 'test/fixture/routes-with-files'
+  }
+  /**
+   * Update the file's content.
+   */
+  async update(path, ...args) {
+    const c = await read(path)
+    const cc = c.replace(...args)
+    await write(path, cc)
   }
   /**
    * Example method.
