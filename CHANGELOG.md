@@ -1,3 +1,9 @@
+## 8 January 2018
+
+### 1.2.0
+
+- [feature] Simple watching of initialised routes.
+
 ## 7 January 2018
 
 ### 1.1.0
