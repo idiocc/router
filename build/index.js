@@ -1,12 +1,11 @@
 const { readRoutes, addRoutes } = require('./lib');
 const { relative } = require('path');
+const { watch } = require('fs');
+const { c } = require('erte');
 const { findChildrenInCache, onChange } = require('./lib/watch');
 const makeGetMiddleware = require('./lib/get-middleware');
+let staticAnalysis = require('static-analysis'); if (staticAnalysis && staticAnalysis.__esModule) staticAnalysis = staticAnalysis.default;
 const { EventEmitter } = require('events');
-let fsevents
-try {
-  fsevents = require('fsevents')
-} catch (e) { /* ignore fsevents */ }
 
 /**
  * Initialise routes.
@@ -43,31 +42,47 @@ const initRoutes = async (router, dir = 'src/routes', {
 
 module.exports=initRoutes
 
-       const watchRoutes = ({
+       const watchRoutes = async ({
   dir, methods, router, aliases, middleware, middlewareConfig,
 }) => {
-  if (!fsevents) throw new Error('fsevents is not available')
+  // if (!fsevents) throw new Error('fsevents is not available')
+  /** @type {import('fs').FSWatcher[]} */
   let watchers = []
   const emitter = new EventEmitter()
-  Object.keys(methods).reduce((acc, m) => {
+  await Object.keys(methods).reduce(async (acc, m) => {
+    await acc
     const method = methods[m]
     const keys = Object.keys(method)
-    keys.reduce((a, key) => {
+    await keys.reduce(async (a, key) => {
+      await a
       const { path } = method[key]
-      const watcher = fsevents(path)
-      watcher.on('modified', () => {
-        console.log('⌁ %s', relative('', path))
+      const onRouteChange = () => {
+        console.log(`${c('⌁', 'yellow')} %s`, relative('', path))
         onChange(path, dir, router, aliases)
         emitter.emit('modified', path)
-      })
+      }
+      const analysis = await staticAnalysis(path)
+      analysis
+        .filter(({ packageJson }) => !packageJson)
+        .map(({ entry }) => entry)
+        .forEach((entry) => {
+          const entryWatcher = watch(entry)
+          entryWatcher.on('change', () => {
+            console.log(c(`☇ ${relative('', entry)}`, 'grey'))
+            onRouteChange()
+          })
+          watchers.push(entryWatcher)
+        })
+
+      const watcher = watch(path, onRouteChange)
       watchers.push(watcher)
       // const c = findChildrenInCache(path)
     }, [])
   }, {})
-  watchers.forEach((w) => w.start())
+  // watchers.forEach((w) => w.start())
   emitter.stop =  () => {
     watchers.forEach(w => {
-      w.stop()
+      w.close()
     })
   }
   return emitter
