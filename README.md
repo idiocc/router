@@ -169,8 +169,6 @@ GET / RESULT:
 
 ## Copyright
 
-(c) [Idio][1] 2019
-
-[1]: https://idio.cc
+<table><tr><th><a href="https://artd.eco"><img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" /></a></th><th>© <a href="https://artd.eco">Art Deco</a> for <a href="https://idio.cc">Idio</a>2019</th><th><a href="https://idio.cc"><img src="https://avatars3.githubusercontent.com/u/40834161?s=100" width="100" alt="Idio" /></a></th><th><a href="https://www.technation.sucks" title="Tech Nation Visa"><img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" /></a></th><th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th></tr></table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>
