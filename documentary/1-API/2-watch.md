@@ -1,4 +1,4 @@
-```## async watchRoutes
+```## async watchRoutes => Watcher
 [
   ["config", "WatchConfig"]
 ]
