@@ -1,6 +1,15 @@
 import { removeExtension, getName, importRoute } from '.'
 import { relative, sep } from 'path'
 
+const recursiveCachePurge = (path) => {
+  const children = findChildrenInCache(path)
+  children.forEach((c) => {
+    recursiveCachePurge(c)
+  })
+  delete require.cache[path]
+  process.stdout.write('.')
+}
+
 export const onChange = (path, dir, router, aliases) => {
   const rel = relative(dir, path)
   const [method, file] = rel.split(sep)
@@ -10,11 +19,7 @@ export const onChange = (path, dir, router, aliases) => {
   const fn = layer.stack.find(({ _route }) => _route)
   if (!fn) return
   const i = layer.stack.indexOf(fn)
-  const children = findChildrenInCache(path)
-  children.forEach((c) => {
-    delete require.cache[c]
-  })
-  delete require.cache[path]
+  recursiveCachePurge(path)
   const { fn: newFn, aliases: ma = [] } = importRoute(dir, rel)
   newFn._route = true
   layer.stack[i] = newFn
@@ -35,13 +40,16 @@ export const onChange = (path, dir, router, aliases) => {
   console.log('> hot reloaded %s %s', name, reloadedAliases.length ? `${reloadedAliases.join(', ')}` : '')
 }
 
+/**
+ * Finds all children except for node_modules and returns list of their filepaths.
+ */
 export const findChildrenInCache = (path) => {
   const item = require.cache[path]
   if (!item) return []
   const { children } = item
   const res = children
     .filter((c) => {
-      return !/node_modules/.test(c)
+      return !/node_modules/.test(c.filename)
     })
     .map(({ id }) => id)
   return res
