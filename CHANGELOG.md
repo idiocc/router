@@ -1,10 +1,16 @@
-## 8 January 2018
+## 8 January 2019
+
+### 1.2.1
+
+- [feature] Watch the initial dependencies for changes to reload routes, better cache clearance.
+
+## 8 January 2019
 
 ### 1.2.0
 
 - [feature] Simple watching of initialised routes.
 
-## 7 January 2018
+## 7 January 2019
 
 ### 1.1.0
 
