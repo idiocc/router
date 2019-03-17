@@ -34,12 +34,9 @@ const Server = async () => {
   const res = await rqt(url)
   console.log(frame(res))
   const path = 'example/watch-routes/get/index.js'
-  const p = new Promise(r => {
-    watcher.once('modified', r)
-  })
   console.log('Update routes/get/index.js')
   await update(path, 'initial', 'updated')
-  await p
+  await new Promise(r => watcher.once('modified', r))
   console.log('GET / RESULT:')
   const res2 = await rqt(url)
   console.log(frame(res2))

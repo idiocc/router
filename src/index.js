@@ -1,6 +1,6 @@
 import { readRoutes, addRoutes } from './lib'
 import { relative } from 'path'
-import { watch } from 'fs'
+import watch from 'node-watch'
 import { c } from 'erte'
 import { findChildrenInCache, onChange } from './lib/watch'
 import makeGetMiddleware from './lib/get-middleware'
@@ -80,7 +80,7 @@ export const watchRoutes = async ({
     }, [])
   }, {})
   // watchers.forEach((w) => w.start())
-  emitter.stop =  () => {
+  emitter.stop = () => {
     watchers.forEach(w => {
       w.close()
     })
