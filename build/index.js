@@ -1,6 +1,6 @@
 const { readRoutes, addRoutes } = require('./lib');
 const { relative } = require('path');
-const { watch } = require('fs');
+let watch = require('node-watch'); if (watch && watch.__esModule) watch = watch.default;
 const { c } = require('erte');
 const { findChildrenInCache, onChange } = require('./lib/watch');
 const makeGetMiddleware = require('./lib/get-middleware');
@@ -80,7 +80,7 @@ module.exports=initRoutes
     }, [])
   }, {})
   // watchers.forEach((w) => w.start())
-  emitter.stop =  () => {
+  emitter.stop = () => {
     watchers.forEach(w => {
       w.close()
     })
