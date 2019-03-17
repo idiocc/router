@@ -49,7 +49,7 @@
     "rqt": "3.1.2",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.8.3"
+    "zoroaster": "3.9.0"
   },
   "dependencies": {
     "@wrote/read-dir-structure": "1.0.2",
