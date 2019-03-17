@@ -1,4 +1,4 @@
-## 14 March 2019
+## 17 March 2019
 
 ### 1.2.1
 
@@ -24,5 +24,5 @@
 
 ### 0.0.0
 
-- Create `@idio/router` with [`mnp`][https://mnpjs.org]
+- Create `@idio/router` with [`mnp`](https://mnpjs.org)
 - [repository]: `src`, `test`
