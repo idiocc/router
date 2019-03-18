@@ -1,3 +1,9 @@
+## 18 March 2019
+
+### 1.2.2
+
+- [fix] Don't watch `node_modules` via _staticAnalysis_ upgrade.
+
 ## 17 March 2019
 
 ### 1.2.1
