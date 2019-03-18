@@ -55,6 +55,6 @@
     "@wrote/read-dir-structure": "1.0.2",
     "erte": "1.1.7",
     "node-watch": "0.6.0",
-    "static-analysis": "1.0.0"
+    "static-analysis": "1.1.1"
   }
 }

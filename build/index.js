@@ -61,7 +61,9 @@ module.exports=initRoutes
         onChange(path, dir, router, aliases)
         emitter.emit('modified', path)
       }
-      const analysis = await staticAnalysis(path)
+      const analysis = await staticAnalysis(path, {
+        nodeModules: false,
+      })
       analysis
         .filter(({ packageJson }) => !packageJson)
         .map(({ entry }) => entry)
