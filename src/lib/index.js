@@ -1,5 +1,6 @@
 import readDirStructure from '@wrote/read-dir-structure'
 import { join, resolve } from 'path'
+import { c } from 'erte'
 
 export const removeExtension = (route) => {
   return `${route.replace(/\.jsx?$/, '')}`
@@ -75,8 +76,12 @@ export const readRoutes = async (dir, {
       .map(file => {
         const methodPath = join(dir, method)
         const route = importRoute(methodPath, file)
+        if (typeof route.fn != 'function') {
+          console.log(c(`${join(methodPath, file)} does not export a function.`, 'yellow'))
+          return false
+        }
         return route
-      })
+      }).filter(Boolean)
 
     const routes = modules.reduce(reducePaths, {})
     return {
