@@ -11,5 +11,5 @@ export const middleware = (route) => {
   return ['example', route]
 }
 
-// Another way to write middleware is to use plain array.
-// export const middleware = ['example']
+// Another way to write middleware is to use a plain array.
+/* export const middleware = ['example'] */
