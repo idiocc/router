@@ -12,6 +12,10 @@ module.exports=makeGetMiddleware
 const makeThunk = (appMiddleware, getMethodChain) => {
   return (route, { getMiddleware, method: m, route: r } = {}) => {
     let chain
+    if (Array.isArray(getMiddleware)) {
+      const mw = [...getMiddleware]
+      getMiddleware = rr => [...mw, rr]
+    }
     if (getMiddleware) {
       chain = getMiddleware(route)
     } else if (getMethodChain) {

@@ -1,5 +1,6 @@
 let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;
 const { join, resolve } = require('path');
+const { c } = require('erte');
 
        const removeExtension = (route) => {
   return `${route.replace(/\.jsx?$/, '')}`
@@ -75,8 +76,12 @@ const reducePaths = (acc, { route, fn, path, aliases }) => {
       .map(file => {
         const methodPath = join(dir, method)
         const route = importRoute(methodPath, file)
+        if (typeof route.fn != 'function') {
+          console.log(c(`${join(methodPath, file)} does not export a function.`, 'yellow'))
+          return false
+        }
         return route
-      })
+      }).filter(Boolean)
 
     const routes = modules.reduce(reducePaths, {})
     return {
