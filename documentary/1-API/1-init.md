@@ -14,6 +14,8 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
 
 * The exported `middleware` property specifies any middleware chain constructor that will take precedence over the method middleware chain constructor from the config. When strings are passed, the middleware functions will be looked up in the `middleware` object returned by the `idio`'s `start` method and passed in the configuration.
 
+* If the export `middleware` property is an array, the route will be the last one in the chain call. Otherwise, exporting a middleware chain constructor as a function allows to control the order of execution.
+
 %TYPEDEF types/index.xml%
 
 For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` directory:
