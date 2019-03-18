@@ -1,3 +1,10 @@
+## 19 March 2019
+
+### 1.3.0
+
+- [feature] Allow to export middleware as an array.
+- [fix] Prevent errors when a route file does not export a function, and notify.
+
 ## 18 March 2019
 
 ### 1.2.2
