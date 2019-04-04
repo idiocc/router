@@ -45,12 +45,12 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
 
 __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
 
-|       Name       |                                   Type                                   |                                                                                                   Description                                                                                                    |
-| ---------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| middlewareConfig | _Object.&lt;string, (route: Middleware) =&gt;\| (string\|Middleware)[]>_ | The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object. |
-| middleware       | _Object.&lt;string, [Middleware](#type-middleware)&gt;_                  | The configured middleware object return by the Idio's `start` method.                                                                                                                                            |
-| filter           | _(string) =&gt; boolean_                                                 | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
-| aliases          | _Object.&lt;string, string[]&gt;_                                        | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
+|       Name       |                                     Type                                     |                                                                                                   Description                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| middlewareConfig | _Object.&lt;string, (route: Middleware) =&gt; \|  (string \| Middleware)[]>_ | The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object. |
+| middleware       | _Object.&lt;string, [Middleware](#type-middleware)&gt;_                      | The configured middleware object return by the Idio's `start` method.                                                                                                                                            |
+| filter           | _(string) =&gt; boolean_                                                     | The filter for filenames. Defaults to importing JS and JSX.                                                                                                                                                      |
+| aliases          | _Object.&lt;string, string[]&gt;_                                            | The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.                                                                                                                 |
 
 For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` directory:
 
@@ -175,6 +175,27 @@ GET / RESULT:
 
 ## Copyright
 
-<table><tr><th><a href="https://artd.eco"><img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" /></a></th><th>© <a href="https://artd.eco">Art Deco</a> for <a href="https://idio.cc">Idio</a>2019</th><th><a href="https://idio.cc"><img src="https://avatars3.githubusercontent.com/u/40834161?s=100" width="100" alt="Idio" /></a></th><th><a href="https://www.technation.sucks" title="Tech Nation Visa"><img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif" alt="Tech Nation Visa" /></a></th><th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th></tr></table>
+<table>
+  <tr>
+    <th>
+      <a href="https://artd.eco">
+        <img src="https://raw.githubusercontent.com/wrote/wrote/master/images/artdeco.png" alt="Art Deco" />
+      </a>
+    </th>
+    <th>© <a href="https://artd.eco">Art Deco</a> for <a href="https://idio.cc">Idio</a> 2019</th>
+    <th>
+      <a href="https://idio.cc">
+        <img src="https://avatars3.githubusercontent.com/u/40834161?s=100" width="100" alt="Idio" />
+      </a>
+    </th>
+    <th>
+      <a href="https://www.technation.sucks" title="Tech Nation Visa">
+        <img src="https://raw.githubusercontent.com/artdecoweb/www.technation.sucks/master/anim.gif"
+          alt="Tech Nation Visa" />
+      </a>
+    </th>
+    <th><a href="https://www.technation.sucks">Tech Nation Visa Sucks</a></th>
+  </tr>
+</table>
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/-1.svg?sanitize=true"></a></p>

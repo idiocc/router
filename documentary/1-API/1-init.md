@@ -23,13 +23,13 @@ For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` d
 %TREE example/routes%
 
 *example/routes/get/index.js*
-%EXAMPLE: example/routes/get/index.js%
+%EXAMPLE: example/routes/get%
 *example/routes/post/example.js*
-%EXAMPLE: example/routes/post/example.js%
+%EXAMPLE: example/routes/post/example%
 
 Then the router can be automatically configured.
 
-%EXAMPLE: example/example.js, ../src => @idio/router%
-%FORK example example/example%
+%EXAMPLE: example, ../src => @idio/router%
+%FORK example%
 
 %~%
