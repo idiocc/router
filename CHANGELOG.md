@@ -1,3 +1,9 @@
+## 4 April 2019
+
+### [1.3.1](https://github.com/idiocc/router/compare/v1.3.0...v1.3.1)
+
+- [deps] Unfix dependencies.
+
 ## 19 March 2019
 
 ### 1.3.0
