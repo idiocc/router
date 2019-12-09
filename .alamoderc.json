@@ -8,5 +8,11 @@
         }
       }
     }
+  },
+  "import": {
+    "alamodeModules": [
+      "@wrote/read-dir-structure", "node-watch",
+      "static-analysis"
+    ]
   }
 }

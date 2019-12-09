@@ -10,7 +10,7 @@ const recursiveCachePurge = (path) => {
   process.stdout.write('.')
 }
 
-       const onChange = (path, dir, router, aliases) => {
+const onChange = (path, dir, router, aliases) => {
   const rel = relative(dir, path)
   const [method, file] = rel.split(sep)
   const route = `/${removeExtension(file)}`
@@ -43,7 +43,7 @@ const recursiveCachePurge = (path) => {
 /**
  * Finds all children except for node_modules and returns list of their filepaths.
  */
-       const findChildrenInCache = (path) => {
+const findChildrenInCache = (path) => {
   const item = require.cache[path]
   if (!item) return []
   const { children } = item

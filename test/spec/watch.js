@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import TempContext from 'temp-context'
 import rqt from 'rqt'
 import IdioContext from '../context/idio'

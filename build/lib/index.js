@@ -1,15 +1,15 @@
-let readDirStructure = require('@wrote/read-dir-structure'); if (readDirStructure && readDirStructure.__esModule) readDirStructure = readDirStructure.default;
+const readDirStructure = require('@wrote/read-dir-structure');
 const { join, resolve } = require('path');
 const { c } = require('erte');
 
-       const removeExtension = (route) => {
+const removeExtension = (route) => {
   return `${route.replace(/\.jsx?$/, '')}`
 }
 
 /**
  * Requires the route module from the file.
  */
-       const importRoute = (dir, file) => {
+const importRoute = (dir, file) => {
   const route = `/${removeExtension(file)}`
   const path = resolve(dir, file)
   const mod = require(path)
@@ -30,7 +30,7 @@ const reducePaths = (acc, { route, fn, path, aliases }) => {
   }
 }
 
-       const getName = (method, path) => `${method.toUpperCase()} ${path}`
+const getName = (method, path) => `${method.toUpperCase()} ${path}`
 
 /**
  * Adds the read routes to the `koa-router` instance.
@@ -41,7 +41,7 @@ const reducePaths = (acc, { route, fn, path, aliases }) => {
  * @param {{string:[string]}} [aliases] The map of aliases.
  * @returns {{string:[string]}} A map where keys are routes and values are aliases for that route.
  */
-       const addRoutes = (routes, method, router, getMiddleware, aliases = {}) => {
+const addRoutes = (routes, method, router, getMiddleware, aliases = {}) => {
   const res = Object.keys(routes).reduce((acc, route) => {
     const fn = routes[route]
     const { aliases: ma = [], middleware: gm } = fn
@@ -63,7 +63,7 @@ const reducePaths = (acc, { route, fn, path, aliases }) => {
 /**
  * Reads routes from the directory.
  */
-       const readRoutes = async (dir, {
+const readRoutes = async (dir, {
   filter = filterJsx,
 } = {}) => {
   const { content: topLevel } = await readDirStructure(dir)

@@ -1,10 +1,10 @@
 const { readRoutes, addRoutes } = require('./lib');
 const { relative } = require('path');
-let watch = require('node-watch'); if (watch && watch.__esModule) watch = watch.default;
+const watch = require('node-watch');
 const { c } = require('erte');
 const { findChildrenInCache, onChange } = require('./lib/watch');
 const makeGetMiddleware = require('./lib/get-middleware');
-let staticAnalysis = require('static-analysis'); if (staticAnalysis && staticAnalysis.__esModule) staticAnalysis = staticAnalysis.default;
+const staticAnalysis = require('static-analysis');
 const { EventEmitter } = require('events');
 
 /**
@@ -42,7 +42,7 @@ const initRoutes = async (router, dir = 'src/routes', {
 
 module.exports=initRoutes
 
-       const watchRoutes = async ({
+const watchRoutes = async ({
   dir, methods, router, aliases, middleware, middlewareConfig,
 }) => {
   // if (!fsevents) throw new Error('fsevents is not available')

@@ -1,4 +1,4 @@
-import { deepEqual, equal } from 'zoroaster/assert'
+import { deepEqual, equal } from '@zoroaster/assert'
 import Context from '../context'
 import { readRoutes, addRoutes } from '../../src/lib'
 
