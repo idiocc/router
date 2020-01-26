@@ -1,7 +1,7 @@
-import staticAnalysis from 'static-analysis'
 import { EventEmitter } from 'events'
 import { relative } from 'path'
 import { c } from 'erte'
+import staticAnalysis from 'static-analysis'
 import { readRoutes, addRoutes } from './lib'
 import { findChildrenInCache, onChange } from './lib/watch'
 import makeGetMiddleware from './lib/get-middleware'

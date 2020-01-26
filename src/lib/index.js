@@ -1,6 +1,6 @@
 import readDirStructure from '@wrote/read-dir-structure'
-import { join, resolve } from 'path'
 import { c } from 'erte'
+import { join, resolve } from 'path'
 
 export const removeExtension = (route) => {
   return `${route.replace(/\.jsx?$/, '')}`

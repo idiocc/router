@@ -1,5 +1,5 @@
-import { removeExtension, getName, importRoute } from '.'
 import { relative, sep } from 'path'
+import { removeExtension, getName, importRoute } from './'
 
 const recursiveCachePurge = (path) => {
   const children = findChildrenInCache(path)

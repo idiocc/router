@@ -11,12 +11,12 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "doc": "doc -o README.md -d -a -n _idio",
-    "b": "alamode src -o build -s",
+    "stdlib": "depack src/stdlib -o stdlib/index.js -a -c -p -s --source_map_include_content",
+    "b": "ALAMODE_ENV=build alamode src -o build -s -i stdlib.js",
     "d": "yarn-s template d1 externs",
     "template": "typal compile/template.js -T compile/index.js -t types",
     "d1": "typal compile/index.js types/index.js -u -t types",
     "externs": "typal types/externs.js -e",
-    "build": "yarn-s d b doc",
     "e": "alanode",
     "example/": "yarn e example/example.js"
   },
@@ -43,25 +43,30 @@
   },
   "homepage": "https://www.idio.cc",
   "devDependencies": {
+    "@depack/detect": "^1.1.0",
+    "@depack/split": "^1.0.0",
     "@externs/idio": "^0.0.3",
+    "@idio/idio": "^1.2.3",
     "@typedefs/idio": "^0.0.3",
     "@wrote/read": "^1.0.4",
+    "@wrote/read-dir-structure": "^1.3.0",
     "@wrote/write": "^1.0.4",
     "alamode": "^3.3.0",
     "catchment": "^3.3.0",
+    "depack": "^1.0.1",
     "documentary": "^1.35.9",
+    "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
+    "fpj": "^1.3.0",
     "frame-of-mind": "^1.2.3",
+    "resolve-dependency": "^1.0.3",
     "rqt": "^4.0.0",
+    "static-analysis": "^2.1.0",
     "temp-context": "^2.1.3",
     "yarn-s": "1.2.1",
     "zoroaster": "^4.1.2"
   },
   "dependencies": {
-    "@idio/idio": "^1.2.3",
-    "@wrote/read-dir-structure": "^1.3.0",
-    "erte": "^1.2.0",
-    "node-watch": "0.6.3",
-    "static-analysis": "^2.1.0"
+    "node-watch": "0.6.3"
   }
 }

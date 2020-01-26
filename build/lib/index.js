@@ -1,6 +1,6 @@
-const readDirStructure = require('@wrote/read-dir-structure');
+const { readDirStructure } = require('../../stdlib');
+const { c } = require('../../stdlib');
 const { join, resolve } = require('path');
-const { c } = require('erte');
 
 const removeExtension = (route) => {
   return `${route.replace(/\.jsx?$/, '')}`

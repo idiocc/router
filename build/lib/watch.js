@@ -1,5 +1,5 @@
-const { removeExtension, getName, importRoute } = require('.');
 const { relative, sep } = require('path');
+const { removeExtension, getName, importRoute } = require('./');
 
 const recursiveCachePurge = (path) => {
   const children = findChildrenInCache(path)

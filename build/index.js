@@ -1,7 +1,7 @@
-const staticAnalysis = require('static-analysis');
 const { EventEmitter } = require('events');
 const { relative } = require('path');
-const { c } = require('erte');
+const { c } = require('../stdlib');
+const { staticAnalysis } = require('../stdlib');
 const { readRoutes, addRoutes } = require('./lib');
 const { findChildrenInCache, onChange } = require('./lib/watch');
 const makeGetMiddleware = require('./lib/get-middleware');

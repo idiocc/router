@@ -7,6 +7,16 @@
           "to": "$1build"
         }
       }
+    },
+    "build": {
+      "import": {
+        "stdlib": {
+          "path": "stdlib",
+          "packages": [
+            "@wrote/read-dir-structure", "erte", "static-analysis"
+          ]
+        }
+      }
     }
   },
   "import": {
