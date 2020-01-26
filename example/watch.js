@@ -11,11 +11,11 @@ const update = async (path, ...args) => {
 }
 
 /* start example */
-import core from '@idio/core'
+import idio from '@idio/idio'
 import initRoutes, { watchRoutes } from '../src'
 
 const Server = async () => {
-  const { app, url, router } = await core({}, { port: 5001 })
+  const { app, url, router } = await idio({}, { port: 5001 })
   const w = await initRoutes(router, 'example/watch-routes')
   app.use(router.routes())
   let watcher

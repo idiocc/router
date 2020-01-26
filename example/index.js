@@ -1,12 +1,21 @@
-/* yarn example/ */
 import rqt from 'rqt'
+import { collect } from 'catchment'
 /* start example */
-import core from '@idio/core'
+import core from '@idio/idio'
 import initRoutes from '../src'
 
 const Server = async () => {
   const { app, url, router, middleware } = await core({
-    bodyparser: {},
+    bodyparser: {
+      middlewareConstructor() {
+        return async (ctx, next) => {
+          const data = await collect(ctx.req)
+          ctx.req.body = JSON.parse(data)
+          ctx.request.body = JSON.parse(data)
+          await next()
+        }
+      },
+    },
     example: {
       middlewareConstructor() {
         return async (ctx, next) => {
@@ -15,7 +24,7 @@ const Server = async () => {
         }
       },
     },
-  }, { port: 5000 })
+  })
   await initRoutes(router, 'example/routes', {
     middlewareConfig: {
       post(route) {

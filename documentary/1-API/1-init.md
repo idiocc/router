@@ -1,12 +1,4 @@
-```## async initRoutes => WatchConfig
-[
-  ["router", "Router"],
-  ["dir", "string?"],
-  ["config", "RouterConfig?"]
-]
-```
-
-The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
+<typedef name="initRoutes" noArgTypesInToc>types/api.xml</typedef>
 
 * Each route module should export the default function which will be initialised as the middleware.
 
@@ -16,7 +8,7 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
 
 * If the exported `middleware` property is an array, the route will be the last one in the chain call. Otherwise, exporting a middleware chain constructor as a function allows to control the order of execution.
 
-%TYPEDEF types/index.xml%
+<typedef narrow>types/index.xml</typedef>
 
 For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` directory:
 

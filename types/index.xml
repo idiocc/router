@@ -1,17 +1,25 @@
-<types>
-  <import name="Middleware" from="koa"/>
-  <type name="RoutesConfig" desc="Options for the router.">
-    <prop opt type="Object.<string, (route: Middleware) => (string|Middleware)[]>" name="middlewareConfig">
+<types ns="_idio">
+  <import name="Middleware" from="@typedefs/idio" ns="_idio" />
+  <import name="ConfiguredMiddleware" from="@typedefs/idio" ns="_idio" />
+
+  <record name="RoutesConfig" desc="Options for the router.">
+    <prop opt type="!Object<string, !_idio.chainRoute>" name="middlewareConfig">
       The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
     </prop>
-    <prop opt name="middleware" type="Object.<string, Middleware>">
+    <prop opt name="middleware" type="!ConfiguredMiddleware">
       The configured middleware object return by the Idio's `start` method.
     </prop>
-    <prop opt name="filter" type="(string) => boolean">
+    <fn opt name="filter" return="boolean">
+      <arg string name="filename">The filename.</arg>
       The filter for filenames. Defaults to importing JS and JSX.
-    </prop>
-    <prop opt name="aliases" type="Object.<string, string[]>">
+    </fn>
+    <prop opt name="aliases" type="!Object<string, !Array<string>>">
       The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
     </prop>
-  </type>
+  </record>
+
+  <method name="chainRoute" return="!Array<string|!_idio.Middleware>">
+    <arg type="!_idio.Middleware" name="route">The route.</arg>
+    Receives the route and returns an ordered array of middleware.
+  </method>
 </types>

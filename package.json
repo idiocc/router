@@ -1,7 +1,7 @@
 {
   "name": "@idio/router",
   "version": "1.3.2",
-  "description": "The Router Utility For The Idio Web Server With Automatic Initialisation And Live Reload.",
+  "description": "The Router Utility For The Idio Web Server With Automatic Initialisation From Folders And Live Reload.",
   "main": "build",
   "scripts": {
     "t": "zoroaster -a",
@@ -10,22 +10,25 @@
     "mask": "yarn t test/mask",
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
-    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "doc": "doc -o README.md -d -a -n _idio",
     "b": "alamode src -o build -s",
-    "d": "yarn-s d1",
-    "d1": "NODE_DEBUG=doc doc src/index.js -g",
+    "d": "yarn-s template d1 externs",
+    "template": "typal compile/template.js -T compile/index.js -t types",
+    "d1": "typal compile/index.js types/index.js -u -t types",
+    "externs": "typal types/externs.js -e",
     "build": "yarn-s d b doc",
-    "rec": "NODE_DEBUG=appshot appshot -T 23 -a Terminal -y 150 -f",
     "e": "alanode",
     "example/": "yarn e example/example.js"
   },
   "files": [
-    "build"
+    "build",
+    "types"
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/idiocc/router.git"
   },
+  "typedefs": "typedefs.json",
   "keywords": [
     "router",
     "idio",
@@ -33,17 +36,19 @@
     "server"
   ],
   "author": "Anton <anton@adc.sh>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/idiocc/router/issues"
   },
-  "homepage": "https://github.com/idiocc/router#readme",
+  "homepage": "https://www.idio.cc",
   "devDependencies": {
-    "@idio/core": "^1.4.0",
+    "@externs/idio": "^0.0.3",
+    "@typedefs/idio": "^0.0.3",
     "@wrote/read": "^1.0.4",
     "@wrote/write": "^1.0.4",
-    "alamode": "^3.2.0",
-    "documentary": "^1.34.2",
+    "alamode": "^3.3.0",
+    "catchment": "^3.3.0",
+    "documentary": "^1.35.9",
     "eslint-config-artdeco": "1.0.1",
     "frame-of-mind": "^1.2.3",
     "rqt": "^4.0.0",
@@ -52,6 +57,7 @@
     "zoroaster": "^4.1.2"
   },
   "dependencies": {
+    "@idio/idio": "^1.2.3",
     "@wrote/read-dir-structure": "^1.3.0",
     "erte": "^1.2.0",
     "node-watch": "0.6.3",

@@ -1,14 +1,12 @@
-import idioCore from '@idio/core'
+import idio from '@idio/idio'
 
 export default class IdioContext {
   /**
-   * @param {idioCore.MiddlewareConfig} middleware
+   * @param {import('@idio/idio').MiddlewareConfig} middleware
    */
   async start(middleware = {}) {
-    const res = await idioCore({
-      ...middleware,
-    }, {
-      port: 0,
+    const res = await idio(middleware, {
+      port: null,
     })
 
     this.app = res.app

@@ -1,10 +1,4 @@
-```## async watchRoutes => Watcher
-[
-  ["config", "WatchConfig"]
-]
-```
-
-After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
+<typedef name="watchRoutes" noArgTypesInToc>types/api.xml</typedef>
 
 %EXAMPLE: example/watch, ../src => @idio/router%
 %FORK example/watch%
