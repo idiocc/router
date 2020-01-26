@@ -18,6 +18,9 @@
     </prop>
   </record>
 
+  <record name="WatchConfig" desc="A private config returned.">
+  </record>
+
   <method name="chainRoute" return="!Array<string|!_idio.Middleware>">
     <arg type="!_idio.Middleware" name="route">The route.</arg>
     Receives the route and returns an ordered array of middleware.

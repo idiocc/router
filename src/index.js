@@ -1,22 +1,15 @@
-import { readRoutes, addRoutes } from './lib'
-import { relative } from 'path'
-import watch from 'node-watch'
-import { c } from 'erte'
-import { findChildrenInCache, onChange } from './lib/watch'
-import makeGetMiddleware from './lib/get-middleware'
 import staticAnalysis from 'static-analysis'
 import { EventEmitter } from 'events'
+import { relative } from 'path'
+import { c } from 'erte'
+import { readRoutes, addRoutes } from './lib'
+import { findChildrenInCache, onChange } from './lib/watch'
+import makeGetMiddleware from './lib/get-middleware'
+
+const watch = require(/* depack */ 'node-watch')
 
 /**
- * Initialise routes.
- * @param {Router} router Instance of the `koa-router`.
- * @param {string} [dir="src/routes"] Path to the directory with routes. Default `src/routes`.
- * @param {RoutesConfig} routesConfig Options for the router.
- * @param {Object.<string, (route: Middleware) => (string|Middleware)[]>} [routesConfig.middlewareConfig] The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
- * @param {Object.<string, Middleware>} [routesConfig.middleware] The configured middleware object return by the Idio's `start` method.
- * @param {(string) => boolean} [routesConfig.filter] The filter for filenames. Defaults to importing JS and JSX.
- * @param {Object.<string, string[]>} [routesConfig.aliases] The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
- * @returns The information necessary to call watch.
+ * @type {_idio.initRoutes}
  */
 const initRoutes = async (router, dir = 'src/routes', {
   middlewareConfig = {},
@@ -42,11 +35,14 @@ const initRoutes = async (router, dir = 'src/routes', {
 
 export default initRoutes
 
+/**
+ * @type {_idio.watchRoutes}
+ */
 export const watchRoutes = async ({
   dir, methods, router, aliases, middleware, middlewareConfig,
 }) => {
   // if (!fsevents) throw new Error('fsevents is not available')
-  /** @type {import('fs').FSWatcher[]} */
+  /** @type {!Array<!FSWatcher>} */
   let watchers = []
   const emitter = new EventEmitter()
   await Object.keys(methods).reduce(async (acc, m) => {
@@ -91,16 +87,14 @@ export const watchRoutes = async ({
 }
 
 /**
- * @typedef {import('koa-router')} Router
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../types').initRoutes} _idio.initRoutes
  */
-
-/* documentary types/index.xml */
 /**
- * @typedef {import('koa').Middleware} Middleware
- *
- * @typedef {Object} RoutesConfig Options for the router.
- * @prop {Object.<string, (route: Middleware) => (string|Middleware)[]>} [middlewareConfig] The method-level middleware configuration: for each method it specifies how to construct the middleware chain. If the string is found in the chain, the middleware will be looked up in the `middleware` object.
- * @prop {Object.<string, Middleware>} [middleware] The configured middleware object return by the Idio's `start` method.
- * @prop {(string) => boolean} [filter] The filter for filenames. Defaults to importing JS and JSX.
- * @prop {Object.<string, string[]>} [aliases] The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../types').watchRoutes} _idio.watchRoutes
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('fs').FSWatcher} fs.FSWatcher
  */

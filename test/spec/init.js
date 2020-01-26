@@ -1,5 +1,6 @@
 import { equal } from '@zoroaster/assert'
 import rqt from 'rqt'
+import { collect } from 'catchment'
 import IdioContext from '../context/idio'
 import Context from '../context'
 import initRoutes from '../../src'
@@ -14,7 +15,16 @@ const TS = {
   async 'sets up exported middleware'({ start }) {
     const tt = 'test'
     const { app, url, router, middleware } = await start({
-      bodyparser: {},
+      bodyparser: {
+        middlewareConstructor() {
+          return async (ctx, next) => {
+            const data = await collect(ctx.req)
+            ctx.req.body = JSON.parse(data)
+            ctx.request.body = JSON.parse(data)
+            await next()
+          }
+        },
+      },
       test: {
         middlewareConstructor() {
           return async (ctx, next) => {
@@ -37,7 +47,16 @@ const TS = {
   async 'uses routes'({ start }, { routesDir }) {
     let getMiddlewareCalls = 0
     const { app, url, router, middleware } = await start({
-      bodyparser: {},
+      bodyparser: {
+        middlewareConstructor() {
+          return async (ctx, next) => {
+            const data = await collect(ctx.req)
+            ctx.req.body = JSON.parse(data)
+            ctx.request.body = JSON.parse(data)
+            await next()
+          }
+        },
+      },
     })
 
     await initRoutes(router, routesDir, {

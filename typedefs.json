@@ -1,6 +1,6 @@
 {
   "_idio.initRoutes": {
-    "link": "https://github.com/idiocc/router#async-initroutesrouter-_goarouterconfig-routerconfig-watchconfig",
+    "link": "https://github.com/idiocc/router#async-initroutesrouter-_goarouterdir-stringconfig-routesconfig-watchconfig",
     "description": "The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method."
   },
   "RoutesConfig": {
@@ -21,5 +21,9 @@
   "_idio.chainRoute": {
     "link": "https://github.com/idiocc/router#chainrouteroute-middleware-arraystringmiddleware",
     "description": "Receives the route and returns an ordered array of middleware."
+  },
+  "_idio.WatchConfig": {
+    "link": "https://github.com/idiocc/router#type-watchconfig",
+    "description": "A private config returned."
   }
 }

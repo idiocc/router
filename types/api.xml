@@ -1,7 +1,8 @@
 <types ns="_idio">
   <method name="initRoutes" async return="!_idio.WatchConfig">
     <arg type="!_goa.Router" name="router">An instance of the router.</arg>
-    <arg type="!_idio.RouterConfig" name="config" opt>Additional configuration.</arg>
+    <arg string name="dir">The directory from where to init routes.</arg>
+    <arg type="!_idio.RoutesConfig" name="config" opt>Additional configuration.</arg>
 
     The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
   </method>

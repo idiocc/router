@@ -12,8 +12,9 @@ yarn add @idio/router
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`async initRoutes(router, config=): !WatchConfig`](#async-initroutesrouter-_goarouterconfig-routerconfig-watchconfig)
+- [`async initRoutes(router, dir, config=): !WatchConfig`](#async-initroutesrouter-_goarouterdir-stringconfig-routesconfig-watchconfig)
   * [`RoutesConfig`](#type-routesconfig)
+  * [`WatchConfig`](#type-watchconfig)
 - [`chainRoute(route: !Middleware): !Array<string|!Middleware>`](#chainrouteroute-middleware-arraystringmiddleware)
 - [`async watchRoutes(config): !Watcher`](#async-watchroutesconfig-watchconfig-watcher)
 - [Copyright & License](#copyright--license)
@@ -34,11 +35,12 @@ import initRoutes, { watchRoutes } from '@idio/router'
   <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
 
-## <code>async <ins>initRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`router: !_goa.Router,`<br/>&nbsp;&nbsp;`config=: !RouterConfig,`<br/></sub><code>): <i>!WatchConfig</i></code>
+## <code>async <ins>initRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`router: !_goa.Router,`<br/>&nbsp;&nbsp;`dir: string,`<br/>&nbsp;&nbsp;`config=: !RoutesConfig,`<br/></sub><code>): <i>!WatchConfig</i></code>
 The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
 
  - <kbd><strong>router*</strong></kbd> <em>`!_goa.Router`</em>: An instance of the router.
- - <kbd>config</kbd> <em>`!RouterConfig`</em> (optional): Additional configuration.
+ - <kbd><strong>dir*</strong></kbd> <em>`string`</em>: The directory from where to init routes.
+ - <kbd>config</kbd> <em><code><a href="#type-routesconfig" title="Options for the router.">!RoutesConfig</a></code></em> (optional): Additional configuration.
 
 * Each route module should export the default function which will be initialised as the middleware.
 
@@ -96,6 +98,9 @@ __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
   </td>
  </tr>
 </table>
+
+
+__<a name="type-watchconfig">`WatchConfig`</a>__: A private config returned.
 
 
 ## <code><ins>chainRoute</ins>(</code><sub><br/>&nbsp;&nbsp;`route: !Middleware,`<br/></sub><code>): <i>!Array<string|!Middleware></i></code>
@@ -202,7 +207,7 @@ POST "hello world" > /
 ## <code>async <ins>watchRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`config: !WatchConfig,`<br/></sub><code>): <i>!Watcher</i></code>
 After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
 
- - <kbd><strong>config*</strong></kbd> <em>`!WatchConfig`</em>: The watch config returned by the `initRoutes` method.
+ - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-watchconfig" title="A private config returned.">!WatchConfig</a></code></em>: The watch config returned by the `initRoutes` method.
 
 ```js
 import idio from '@idio/idio'

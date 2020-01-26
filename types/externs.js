@@ -31,6 +31,11 @@ _idio.RoutesConfig.prototype.aliases
  */
 _idio.RoutesConfig.prototype.filter = function(filename) {}
 /**
+ * A private config returned.
+ * @record
+ */
+_idio.WatchConfig
+/**
  * Receives the route and returns an ordered array of middleware.
  * @typedef {function(!_idio.Middleware): !Array<string|!_idio.Middleware>}
  */

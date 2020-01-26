@@ -8,6 +8,8 @@
  * @prop {!ConfiguredMiddleware} [middleware] The configured middleware object return by the Idio's `start` method.
  * @prop {!Object<string, !Array<string>>} [aliases] The map of aliases. Aliases can also be specified in routes by exporting the `aliases` property.
  * @prop {(filename: string) => boolean} [filter] The filter for filenames. Defaults to importing JS and JSX.
+ * @typedef {_idio.WatchConfig} WatchConfig `＠record` A private config returned.
+ * @typedef {Object} _idio.WatchConfig `＠record` A private config returned.
  * @typedef {_idio.chainRoute} chainRoute Receives the route and returns an ordered array of middleware.
  * @typedef {(route: !_idio.Middleware) => !Array<string|!_idio.Middleware>} _idio.chainRoute Receives the route and returns an ordered array of middleware.
  */
