@@ -1,3 +1,11 @@
+## 26 January 2020
+
+### [1.4.0](https://github.com/idiocc/router/compare/v1.3.2...v1.4.0)
+
+- [feature] Allow to override routes.
+- [license] Update to AGPLv3.
+- [package] Compile `stdlib`.
+
 ## 9 December 2019
 
 ### [1.3.2](https://github.com/idiocc/router/compare/v1.3.1...v1.3.2)
