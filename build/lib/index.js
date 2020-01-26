@@ -8,13 +8,14 @@ const removeExtension = (route) => {
 
 /**
  * Requires the route module from the file.
+ * @param {string} dir The directory from which to require file.
+ * @param {string} file The name of the file to require.
  */
 const importRoute = (dir, file) => {
-  const route = `/${removeExtension(file)}`
   const path = resolve(dir, file)
   const mod = require(path)
-  const fn = mod.__esModule ? mod.default : mod
-  const { aliases, middleware } = mod
+  const fn = mod['__esModule'] ? mod['default'] : mod
+  const { aliases, middleware, route = `/${removeExtension(file)}` } = mod
   return { route, fn, path, aliases, middleware }
 }
 
