@@ -1,6 +1,6 @@
 {
   "name": "@idio/router",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "The Router Utility For The Idio Web Server With Automatic Initialisation From Folders And Live Reload.",
   "main": "build",
   "scripts": {
