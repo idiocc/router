@@ -23,7 +23,8 @@
   "files": [
     "build",
     "types",
-    "compile"
+    "compile",
+    "stdlib"
   ],
   "repository": {
     "type": "git",
