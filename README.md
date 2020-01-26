@@ -14,8 +14,7 @@ yarn add @idio/router
 - [API](#api)
 - [`async initRoutes(router, dir, config=): !WatchConfig`](#async-initroutesrouter-_goarouterdir-stringconfig-routesconfig-watchconfig)
   * [`RoutesConfig`](#type-routesconfig)
-  * [`WatchConfig`](#type-watchconfig)
-- [`chainRoute(route: !Middleware): !Array<string|!Middleware>`](#chainrouteroute-middleware-arraystringmiddleware)
+  * [`chainRoute(route: !Middleware): !Array<string|!Middleware>`](#chainrouteroute-middleware-arraystringmiddleware)
 - [`async watchRoutes(config): !Watcher`](#async-watchroutesconfig-watchconfig-watcher)
 - [Copyright & License](#copyright--license)
 
@@ -42,13 +41,12 @@ The `init` function will scan files in the passed `dir` folder and add routes fo
  - <kbd><strong>dir*</strong></kbd> <em>`string`</em>: The directory from where to init routes.
  - <kbd>config</kbd> <em><code><a href="#type-routesconfig" title="Options for the router.">!RoutesConfig</a></code></em> (optional): Additional configuration.
 
-* Each route module should export the default function which will be initialised as the middleware.
+There are some rules when using this method:
 
-* The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object &mdash; or when both ways are used, they are combined).
-
-* The exported `middleware` property specifies any middleware chain constructor that will take precedence over the method middleware chain constructor from the config. When strings are passed, the middleware functions will be looked up in the `middleware` object returned by the `idio`'s `start` method and passed in the configuration.
-
-* If the exported `middleware` property is an array, the route will be the last one in the chain call. Otherwise, exporting a middleware chain constructor as a function allows to control the order of execution.
+1. Each route module should export the default function which will be initialised as the middleware.
+1. The modules can also export the `aliases` property with an array of strings that are aliases for the route (alternatively, aliases can be specified via the configuration object &mdash; or when both ways are used, they are combined).
+1. The exported `middleware` property specifies any middleware chain constructor that will take precedence over the method middleware chain constructor from the config. When strings are passed, the middleware functions will be looked up in the `middleware` object returned by the `idio`'s `start` method and passed in the configuration.
+1. If the exported `middleware` property is an array, the route will be the last one in the chain call. Otherwise, exporting a middleware chain constructor as a function allows to control the order of execution.
 
 __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
 <table>
@@ -99,14 +97,6 @@ __<a name="type-routesconfig">`RoutesConfig`</a>__: Options for the router.
  </tr>
 </table>
 
-
-__<a name="type-watchconfig">`WatchConfig`</a>__: A private config returned.
-
-
-## <code><ins>chainRoute</ins>(</code><sub><br/>&nbsp;&nbsp;`route: !Middleware,`<br/></sub><code>): <i>!Array<string|!Middleware></i></code>
-Receives the route and returns an ordered array of middleware.
-
- - <kbd><strong>route*</strong></kbd> <em><code>[!Middleware](#type-middleware)</code></em>: The route.
 
 For example, we can specify 1 `GET` and 1 `POST` route in the `example/routes` directory:
 
@@ -200,6 +190,11 @@ POST "hello world" > /
  :: example post response: hello world
 ```
 
+### <code><ins>chainRoute</ins>(</code><sub><br/>&nbsp;&nbsp;`route: !Middleware,`<br/></sub><code>): <i>!Array<string|!Middleware></i></code>
+Receives the route and returns an ordered array of middleware.
+
+ - <kbd><strong>route*</strong></kbd> <em><code>[!Middleware](#type-middleware)</code></em>: The route.
+
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
@@ -207,7 +202,7 @@ POST "hello world" > /
 ## <code>async <ins>watchRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`config: !WatchConfig,`<br/></sub><code>): <i>!Watcher</i></code>
 After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
 
- - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-watchconfig" title="A private config returned.">!WatchConfig</a></code></em>: The watch config returned by the `initRoutes` method.
+ - <kbd><strong>config*</strong></kbd> <em>`!WatchConfig`</em>: The watch config returned by the `initRoutes` method.
 
 ```js
 import idio from '@idio/idio'
