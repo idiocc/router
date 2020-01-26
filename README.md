@@ -30,6 +30,7 @@ The package is available by importing its default function:
 import initRoutes, { watchRoutes } from '@idio/router'
 ```
 
+
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/1.svg?sanitize=true">
 </a></p>
@@ -193,7 +194,7 @@ POST "hello world" > /
 ### <code><ins>chainRoute</ins>(</code><sub><br/>&nbsp;&nbsp;`route: !Middleware,`<br/></sub><code>): <i>!Array<string|!Middleware></i></code>
 Receives the route and returns an ordered array of middleware.
 
- - <kbd><strong>route*</strong></kbd> <em><code>[!Middleware](#type-middleware)</code></em>: The route.
+ - <kbd><strong>route*</strong></kbd> <em><code><a href="https://github.com/idiocc/idio/wiki/Home#middlewarectx-contextnext-function-promisevoid" title="The function to handle requests which can be installed with the `.use` method.">!Middleware</a></code></em>: The route.
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
