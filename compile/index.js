@@ -1,3 +1,5 @@
+module.exports = {}
+
 /* typal types/index.xml namespace */
 /**
  * @typedef {import('@typedefs/idio').Middleware} _idio.Middleware

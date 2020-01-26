@@ -1,4 +1,6 @@
 <types ns="_idio">
+  <import from="fs" name="FSWatcher" />
+
   <method name="initRoutes" async return="!_idio.WatchConfig">
     <arg type="!_goa.Router" name="router">An instance of the router.</arg>
     <arg string name="dir">The directory from where to init routes.</arg>
@@ -7,8 +9,8 @@
     The `init` function will scan files in the passed `dir` folder and add routes found for each method to the router. The default `dir` is `src/routes` and the config should be passed to control how the middleware and aliases are set up for each method.
   </method>
 
-  <method name="watchRoutes" async return="!Watcher">
-    <arg type="!_idio.WatchConfig" name="config">The watch config returned by the `initRoutes` method.</arg>
+  <method name="watchRoutes" async return="!fs.FSWatcher">
+    <arg type="!_idio.WatchConfig" name="watchConfig">The watch config returned by the `initRoutes` method.</arg>
 
     After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
   </method>

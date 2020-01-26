@@ -15,7 +15,7 @@ yarn add @idio/router
 - [`async initRoutes(router, dir, config=): !WatchConfig`](#async-initroutesrouter-_goarouterdir-stringconfig-routesconfig-watchconfig)
   * [`RoutesConfig`](#type-routesconfig)
   * [`chainRoute(route: !Middleware): !Array<string|!Middleware>`](#chainrouteroute-middleware-arraystringmiddleware)
-- [`async watchRoutes(config): !Watcher`](#async-watchroutesconfig-watchconfig-watcher)
+- [`async watchRoutes(watchConfig): !fs.FSWatcher`](#async-watchrouteswatchconfig-watchconfig-fsfswatcher)
 - [Copyright & License](#copyright--license)
 
 <p align="center"><a href="#table-of-contents">
@@ -199,10 +199,10 @@ Receives the route and returns an ordered array of middleware.
   <img src="/.documentary/section-breaks/2.svg?sanitize=true">
 </a></p>
 
-## <code>async <ins>watchRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`config: !WatchConfig,`<br/></sub><code>): <i>!Watcher</i></code>
+## <code>async <ins>watchRoutes</ins>(</code><sub><br/>&nbsp;&nbsp;`watchConfig: !WatchConfig,`<br/></sub><code>): <i>!fs.FSWatcher</i></code>
 After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*
 
- - <kbd><strong>config*</strong></kbd> <em>`!WatchConfig`</em>: The watch config returned by the `initRoutes` method.
+ - <kbd><strong>watchConfig*</strong></kbd> <em>`!WatchConfig`</em>: The watch config returned by the `initRoutes` method.
 
 ```js
 import idio from '@idio/idio'

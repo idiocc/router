@@ -15,7 +15,7 @@
     "description": "Options for the router."
   },
   "_idio.watchRoutes": {
-    "link": "https://github.com/idiocc/router#async-watchroutesconfig-watchconfig-watcher",
+    "link": "https://github.com/idiocc/router#async-watchrouteswatchconfig-watchconfig-fsfswatcher",
     "description": "After the routes were initialised, it is possible to pass the value returned by the `initRoutes` method to the `watchRoutes` function to enable hot-route reload on the development environment. Every change to the module source code will trigger an update of the route including its aliases. *The middleware and aliases changes are not currently implemented.*"
   },
   "_idio.chainRoute": {
