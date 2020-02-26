@@ -1,3 +1,9 @@
+## 26 February 2020
+
+### [1.4.2](https://github.com/idiocc/router/compare/v1.4.1...v1.4.2)
+
+- [fix] Remove static analysis in favour of `require.cache`.
+
 ## 26 January 2020
 
 ### [1.4.1](https://github.com/idiocc/router/compare/v1.4.0...v1.4.1)
