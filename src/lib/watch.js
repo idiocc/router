@@ -10,6 +10,19 @@ const recursiveCachePurge = (path) => {
   process.stdout.write('.')
 }
 
+/**
+ * @param {string} path
+ */
+export const findAllChildren = (path) => {
+  const children = findChildrenInCache(path)
+  const all = children.reduce((acc, child) => {
+    const c = findAllChildren(child)
+    acc.push(child, ...c)
+    return acc
+  }, [])
+  return all
+}
+
 export const onChange = (path, dir, router, aliases) => {
   const rel = relative(dir, path)
   const [method, file] = rel.split(sep)
@@ -42,6 +55,7 @@ export const onChange = (path, dir, router, aliases) => {
 
 /**
  * Finds all children except for node_modules and returns list of their filepaths.
+ * @param {string} path The full path to the module.
  */
 export const findChildrenInCache = (path) => {
   const item = require.cache[path]

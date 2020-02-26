@@ -12,16 +12,20 @@ const waitForChange = async (emitter, file) => {
   }))
 }
 
+// when running in watch mode, tests will be restarted after each run
+// because route modules are required from the package
+// Zoroaster needs to be able to ignore watch dir
+
 /** @type {Object.<string, (c: Context, t:TempContext, i:IdioContext)>} */
 const T = {
   context: [Context, TempContext, IdioContext],
-  async 'updates the routes'({ routesDir, update }, { TEMP, add, resolve }, { start }) {
+  async'updates the routes'({ routesDir, update }, { TEMP, add, resolve }, { start }) {
     const routes = await add(routesDir, TEMP)
     await add('test/fixture/layout', TEMP)
     const { app, router, url } = await start()
     const routesConf = await initRoutes(router, routes)
     app.use(router.routes())
-    const emitter = await watchRoutes(routesConf)
+    const emitter = watchRoutes(routesConf)
     let error
     try {
       const test = resolve('routes/get/test.js')
